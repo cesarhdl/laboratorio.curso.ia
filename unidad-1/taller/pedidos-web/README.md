@@ -28,20 +28,51 @@ pedidos-web/
 ├── tests/
 │   └── PedidosWeb.Core.Tests/        ← tests xUnit
 │       └── Folios/FolioFormatterTests.cs
-└── docs/                             ← aquí va tu mapa-sdlc.md (paso 4)
+└── docs/                             ← plantilla-mapa-sdlc.md y tu mapa-sdlc.md (paso 4)
 ```
 
 ## Cómo empezar
 
-1. Clona el repo y ábrelo en Rider: **File → Open** y elige `PedidosWeb.sln`.
-2. Compila y ejecuta los tests desde la terminal integrada de Rider:
+Necesitas Git, una cuenta de GitHub y el [SDK de .NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0).
+
+1. **Crea tu propio repositorio.** Este proyecto se entrega una sola vez: lo copias fuera del material del curso y lo usas en tu cuenta de GitHub hasta la Unidad 10.
+
+   ```bash
+   git clone https://github.com/ffelipecuevasc/material-curso-ia-desarrolladores.git
+   ```
+
+   Copia la carpeta del caso al lado del material (no adentro):
+
+   ```bash
+   # macOS, Linux o WSL
+   cp -r material-curso-ia-desarrolladores/unidad-1/taller/pedidos-web ./pedidos-web
+   ```
+
+   ```powershell
+   # Windows PowerShell
+   Copy-Item -Recurse material-curso-ia-desarrolladores/unidad-1/taller/pedidos-web ./pedidos-web
+   ```
+
+   Conviértela en tu repo. Antes, crea en GitHub un repositorio vacío llamado `pedidos-web` (sin README ni .gitignore):
+
+   ```bash
+   cd pedidos-web
+   git init -b main
+   git add .
+   git commit -m "chore: proyecto inicial Pedidos Web (U1)"
+   git remote add origin https://github.com/TU-USUARIO/pedidos-web.git
+   git push -u origin main
+   ```
+
+2. Abre **tu** carpeta `pedidos-web` en Rider: **File → Open** y elige `PedidosWeb.sln`.
+3. Compila y ejecuta los tests desde la terminal integrada de Rider. La primera vez descarga paquetes de NuGet: hazlo ahora, no en el paso 3.
 
    ```bash
    dotnet build
    dotnet test
    ```
 
-3. **Resultado esperado hoy:** compila y los 3 tests de `FolioFormatterTests` fallan con `NotImplementedException`. Es normal: la función todavía no existe. La implementas en el paso 3 del taller.
+4. **Resultado esperado hoy:** compila y los 3 tests de `FolioFormatterTests` fallan con `NotImplementedException`. Es normal: la función todavía no existe. La implementas en el paso 3 del taller.
 
 ---
 
@@ -108,10 +139,10 @@ PED-{SUCURSAL}-{NUMERO}
 
 | Paso | Qué haces aquí |
 |---|---|
-| 1 | Abres `claude` en la terminal integrada de Rider, dentro de esta carpeta, y le preguntas: *«¿Cuáles son las reglas de este proyecto?»*. Debe citar `AGENTS.md`. |
+| 1 | Creas tu repo (ver «Cómo empezar»), compruebas que `dotnet test` corre (3 tests en rojo), abres `claude` en la terminal integrada de Rider, dentro de esta carpeta, y le preguntas: *«¿Cuáles son las reglas de este proyecto?»*. Debe citar `AGENTS.md`. |
 | 3 | Implementas `FormatearFolio()` dos veces: **ronda A sin IA** y **ronda B con Claude Code**. Anotas tiempo, errores y qué corregiste. Entre una ronda y otra puedes volver al estado inicial con `git stash` o `git checkout -- src`. |
-| 4 | Creas `docs/mapa-sdlc.md` con la plantilla de la guía. |
-| 5 | Haces commit: `git add docs/mapa-sdlc.md` y `git commit -m "docs: mapa de uso de IA en el SDLC (U1)"`. |
+| 4 | Copias `docs/plantilla-mapa-sdlc.md` como `docs/mapa-sdlc.md` y lo completas. |
+| 5 | Haces commit y push: `git add docs/mapa-sdlc.md`, `git commit -m "docs: mapa de uso de IA en el SDLC (U1)"` y `git push`. |
 
 ## Licencias
 

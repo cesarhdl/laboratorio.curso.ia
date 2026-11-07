@@ -4,7 +4,7 @@ Este Project se usa en la parte 2 de la demo «Chat, Project o agente» (Unidad 
 
 ## Cómo crearlo (5 minutos)
 
-1. Entra a claude.ai con tu cuenta Team y abre **Projects → Create project**.
+1. Entra a claude.ai con tu cuenta (Pro o Team) y abre **Projects → Create project**.
 2. **Nombre:** `ReservaCancha`
 3. **Descripción:** `Reservas de canchas del recinto La Pelota (demo del curso).`
 4. **Instrucciones del Project** (copia el bloque de abajo en el campo de instrucciones personalizadas).
