@@ -17,9 +17,12 @@ unidad-N/
 | Unidad | Demos | Taller |
 |---|---|---|
 | 1 · IA generativa y SDLC | `reservacancha/`, `claude-project-reservacancha/`, `rut-chileno/` | `pedidos-web/` (caso del curso), `caso-scrum-y-sdd.pdf` |
+| 2 · Desarrollo guiado por specs (SDD) | `todomini/`, `tiendamini/` | `pedidos-web/` (base de la U2), `u2-respaldo/`, `prompt-maestro.md` |
 
 ## El caso del curso: `pedidos-web`
 
 `unidad-1/taller/pedidos-web` se entrega **una sola vez**. En la Unidad 1 lo copias a **tu propio repositorio de GitHub** y trabajas en él hasta la Unidad 10. Los pasos están en su `README.md`.
+
+En la **Unidad 2** no se copia otro repo: se actualiza tu repo propio con el **camino A** del README de `unidad-2/taller/pedidos-web`.
 
 > Todo el contenido es ficticio y tiene fines educativos.

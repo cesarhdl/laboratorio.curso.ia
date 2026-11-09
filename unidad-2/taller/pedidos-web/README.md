@@ -47,7 +47,7 @@ No copies la carpeta completa: pisarías tu `FolioFormatter.cs` y tu `docs/mapa-
 ```bash
 # macOS, Linux o WSL
 cd material-curso-ia-desarrolladores && git pull && cd ..
-U2=material-curso-ia-desarrolladores/unidad-2/pedidos-web
+U2=material-curso-ia-desarrolladores/unidad-2/taller/pedidos-web
 cp -r $U2/src/PedidosWeb.Api pedidos-web/src/
 cp -r $U2/src/PedidosWeb.Core/Pedidos pedidos-web/src/PedidosWeb.Core/
 cp -r $U2/tests/PedidosWeb.Core.Tests/Pedidos pedidos-web/tests/PedidosWeb.Core.Tests/
@@ -58,7 +58,7 @@ cp $U2/PedidosWeb.sln $U2/AGENTS.md $U2/README.md pedidos-web/
 ```powershell
 # Windows PowerShell
 cd material-curso-ia-desarrolladores; git pull; cd ..
-$U2 = "material-curso-ia-desarrolladores/unidad-2/pedidos-web"
+$U2 = "material-curso-ia-desarrolladores/unidad-2/taller/pedidos-web"
 Copy-Item -Recurse "$U2/src/PedidosWeb.Api" pedidos-web/src/
 Copy-Item -Recurse "$U2/src/PedidosWeb.Core/Pedidos" pedidos-web/src/PedidosWeb.Core/
 Copy-Item -Recurse "$U2/tests/PedidosWeb.Core.Tests/Pedidos" pedidos-web/tests/PedidosWeb.Core.Tests/
@@ -79,7 +79,7 @@ git push
 
 ### B. No tienes el repo de la Unidad 1
 
-Sigue el paso 1 del README de `unidad-1/taller/pedidos-web` (crear tu repo en GitHub), pero copia esta carpeta (`unidad-2/pedidos-web`) en vez de la de la Unidad 1.
+Sigue el paso 1 del README de `unidad-1/taller/pedidos-web` (crear tu repo en GitHub), pero copia esta carpeta (`unidad-2/taller/pedidos-web`) en vez de la de la Unidad 1.
 
 ### Compila, prueba y levanta la API
 

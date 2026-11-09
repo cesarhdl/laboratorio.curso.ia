@@ -1,6 +1,6 @@
 # HU-01 · Listar pedidos con filtros
 
-> Estado: aprobada · Versión 1.0 · Rama de respaldo `u2-respaldo` (plan B del paso 2 del taller de la Unidad 2)
+> Estado: aprobada · Versión 1.0 · Carpeta de respaldo `u2-respaldo` (plan B del paso 2 del taller de la Unidad 2)
 > Es una spec de referencia: tu spec puede decidir distinto si es coherente y verificable.
 
 ## 1. Historia de usuario
@@ -93,4 +93,4 @@ GET /api/pedidos?desde=2026-10-31&hasta=2026-10-01
 
 | Versión | Fecha | Cambio |
 |---|---|---|
-| 1.0 | 2026-11-04 | Versión inicial aprobada para la rama de respaldo. |
+| 1.0 | 2026-11-04 | Versión inicial aprobada para la carpeta de respaldo. |
