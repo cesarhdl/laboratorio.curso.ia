@@ -20,7 +20,7 @@ Este repositorio es el **caso hilo** del curso *Desarrollando con IA* (Vela LATA
 
 ```
 pedidos-web/
-├── AGENTS.md                         ← reglas del proyecto para agentes de IA
+├── AGENTS.md                         ← U2: vacío a propósito; lo escribes en el paso 1 del taller
 ├── PedidosWeb.sln
 ├── src/
 │   ├── PedidosWeb.Core/              ← lógica de dominio
@@ -66,7 +66,7 @@ Copy-Item -Recurse "$U2/specs" pedidos-web/
 Copy-Item "$U2/PedidosWeb.sln", "$U2/AGENTS.md", "$U2/README.md" pedidos-web/
 ```
 
-`PedidosWeb.sln` se reemplaza porque ahora incluye el proyecto `PedidosWeb.Api`. `AGENTS.md` cambia en dos puntos: el comando para ejecutar la API y la regla 6, que ahora incluye `specs/`. Si habías editado tu `AGENTS.md`, aplica solo esos dos cambios a mano.
+`PedidosWeb.sln` se reemplaza porque ahora incluye el proyecto `PedidosWeb.Api`. `AGENTS.md` se reemplaza por uno **vacío a propósito**: en el paso 1 del taller escribes el tuyo con el prompt maestro. Las reglas de la Unidad 1 siguen en tu historial de Git (`git log -p -- AGENTS.md`), por si quieres rescatar alguna.
 
 Guarda el punto de partida con un commit:
 
@@ -181,10 +181,11 @@ PED-{SUCURSAL}-{NUMERO}
 
 ### Qué hay hoy
 
-- **Modelo** `Pedido` (`src/PedidosWeb.Core/Pedidos/Pedido.cs`): `Id`, `Folio`, `ClienteId`, `ClienteNombre`, `Fecha` (`DateOnly`), `Estado` (texto), `Total` (CLP, `decimal` sin decimales, como pide la regla 7 de `AGENTS.md`) y `Sucursal`.
+- **Modelo** `Pedido` (`src/PedidosWeb.Core/Pedidos/Pedido.cs`): `Id`, `Folio`, `ClienteId`, `ClienteNombre`, `Fecha` (`DateOnly`), `Estado` (texto), `Total` (CLP, `decimal` sin decimales, nunca `double` ni `float`) y `Sucursal`.
 - **Repositorio en memoria** con **45 pedidos de ejemplo** entre el 2 de septiembre y el 31 de octubre de 2026. Todos son ficticios.
 - **Endpoints:** `GET /salud` y `GET /api/pedidos/{id}`.
 - **Todavía no existe** el listado con filtros: es la historia **HU-01** que construyes en el taller.
+- **`AGENTS.md` está vacío a propósito.** Lo escribes tú en el paso 1, con el prompt maestro y la guía de [agents.md](https://agents.md/).
 
 ### Los datos de ejemplo, en números
 
