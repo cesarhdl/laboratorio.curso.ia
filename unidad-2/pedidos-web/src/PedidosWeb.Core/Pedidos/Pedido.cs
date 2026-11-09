@@ -9,7 +9,7 @@ namespace PedidosWeb.Core.Pedidos;
 /// <param name="ClienteNombre">Nombre del cliente.</param>
 /// <param name="Fecha">Fecha en que se emitió el pedido (hora local de Chile; sin hora).</param>
 /// <param name="Estado">Estado del pedido como texto, tal como lo guarda el legado.</param>
-/// <param name="Total">Total en pesos chilenos (CLP), entero, sin decimales.</param>
+/// <param name="Total">Total en pesos chilenos (CLP): <c>decimal</c> sin decimales (regla 7 de AGENTS.md).</param>
 /// <param name="Sucursal">Código de la sucursal que emitió el pedido.</param>
 public sealed record Pedido(
     int Id,
@@ -18,5 +18,5 @@ public sealed record Pedido(
     string ClienteNombre,
     DateOnly Fecha,
     string Estado,
-    int Total,
+    decimal Total,
     string Sucursal);

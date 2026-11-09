@@ -38,7 +38,52 @@ pedidos-web/
 
 ## Cómo empezar
 
-1. Clona el repo y ábrelo en Rider: **File → Open** y elige `PedidosWeb.sln`.
+Elige **un** camino. El A es el normal.
+
+### A. Ya tienes tu repo `pedidos-web` de la Unidad 1 (lo normal)
+
+No copies la carpeta completa: pisarías tu `FolioFormatter.cs` y tu `docs/mapa-sdlc.md`. Copia **solo lo nuevo de la Unidad 2**. Trabaja en la carpeta que contiene tu `pedidos-web` y el material del curso, uno al lado del otro.
+
+```bash
+# macOS, Linux o WSL
+cd material-curso-ia-desarrolladores && git pull && cd ..
+U2=material-curso-ia-desarrolladores/unidad-2/pedidos-web
+cp -r $U2/src/PedidosWeb.Api pedidos-web/src/
+cp -r $U2/src/PedidosWeb.Core/Pedidos pedidos-web/src/PedidosWeb.Core/
+cp -r $U2/tests/PedidosWeb.Core.Tests/Pedidos pedidos-web/tests/PedidosWeb.Core.Tests/
+cp -r $U2/specs pedidos-web/
+cp $U2/PedidosWeb.sln $U2/AGENTS.md $U2/README.md pedidos-web/
+```
+
+```powershell
+# Windows PowerShell
+cd material-curso-ia-desarrolladores; git pull; cd ..
+$U2 = "material-curso-ia-desarrolladores/unidad-2/pedidos-web"
+Copy-Item -Recurse "$U2/src/PedidosWeb.Api" pedidos-web/src/
+Copy-Item -Recurse "$U2/src/PedidosWeb.Core/Pedidos" pedidos-web/src/PedidosWeb.Core/
+Copy-Item -Recurse "$U2/tests/PedidosWeb.Core.Tests/Pedidos" pedidos-web/tests/PedidosWeb.Core.Tests/
+Copy-Item -Recurse "$U2/specs" pedidos-web/
+Copy-Item "$U2/PedidosWeb.sln", "$U2/AGENTS.md", "$U2/README.md" pedidos-web/
+```
+
+`PedidosWeb.sln` se reemplaza porque ahora incluye el proyecto `PedidosWeb.Api`. `AGENTS.md` cambia en dos puntos: el comando para ejecutar la API y la regla 6, que ahora incluye `specs/`. Si habías editado tu `AGENTS.md`, aplica solo esos dos cambios a mano.
+
+Guarda el punto de partida con un commit:
+
+```bash
+cd pedidos-web
+git add .
+git commit -m "chore: base de la Unidad 2 (API y pedidos de ejemplo)"
+git push
+```
+
+### B. No tienes el repo de la Unidad 1
+
+Sigue el paso 1 del README de `unidad-1/taller/pedidos-web` (crear tu repo en GitHub), pero copia esta carpeta (`unidad-2/pedidos-web`) en vez de la de la Unidad 1.
+
+### Compila, prueba y levanta la API
+
+1. Abre **tu** carpeta `pedidos-web` en Rider: **File → Open** y elige `PedidosWeb.sln`.
 2. Compila y ejecuta los tests desde la terminal integrada de Rider:
 
    ```bash
@@ -46,14 +91,14 @@ pedidos-web/
    dotnet test
    ```
 
-3. **Resultado esperado al clonar:** compila; los 4 tests de `PedidoRepositorioEnMemoriaTests` pasan y los 3 de `FolioFormatterTests` fallan con `NotImplementedException`. Es normal: `FormatearFolio()` la implementas en el paso 3 del taller de la Unidad 1.
-4. Para levantar la API:
+3. **Resultado esperado:** compila y los 4 tests de `PedidoRepositorioEnMemoriaTests` pasan. Los 3 de `FolioFormatterTests` pasan si vienes del camino A con `FormatearFolio()` implementada, y fallan con `NotImplementedException` si vienes del camino B (es normal: esa función es del taller de la Unidad 1).
+4. Levanta la API:
 
    ```bash
    dotnet run --project src/PedidosWeb.Api
    ```
 
-   Abre `http://localhost:5080/salud` (responde `{"estado":"ok"}`) y `http://localhost:5080/api/pedidos/8` (detalle de un pedido).
+   Abre `http://localhost:5080/salud` (responde `{"estado":"ok"}`) y `http://localhost:5080/api/pedidos/8` (detalle de un pedido). Detén la API con `Ctrl+C`.
 
 ---
 
@@ -136,7 +181,7 @@ PED-{SUCURSAL}-{NUMERO}
 
 ### Qué hay hoy
 
-- **Modelo** `Pedido` (`src/PedidosWeb.Core/Pedidos/Pedido.cs`): `Id`, `Folio`, `ClienteId`, `ClienteNombre`, `Fecha` (`DateOnly`), `Estado` (texto), `Total` (CLP, `int`) y `Sucursal`.
+- **Modelo** `Pedido` (`src/PedidosWeb.Core/Pedidos/Pedido.cs`): `Id`, `Folio`, `ClienteId`, `ClienteNombre`, `Fecha` (`DateOnly`), `Estado` (texto), `Total` (CLP, `decimal` sin decimales, como pide la regla 7 de `AGENTS.md`) y `Sucursal`.
 - **Repositorio en memoria** con **45 pedidos de ejemplo** entre el 2 de septiembre y el 31 de octubre de 2026. Todos son ficticios.
 - **Endpoints:** `GET /salud` y `GET /api/pedidos/{id}`.
 - **Todavía no existe** el listado con filtros: es la historia **HU-01** que construyes en el taller.
