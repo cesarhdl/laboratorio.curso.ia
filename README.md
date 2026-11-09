@@ -17,7 +17,7 @@ unidad-N/
 | Unidad | Demos | Taller |
 |---|---|---|
 | 1 · IA generativa y SDLC | `reservacancha/`, `claude-project-reservacancha/`, `rut-chileno/` | `pedidos-web/` (caso del curso), `caso-scrum-y-sdd.pdf` |
-| 2 · Desarrollo guiado por specs (SDD) | `todomini/`, `tiendamini/` | `pedidos-web/` (base de la U2), `u2-respaldo/`, `prompt-maestro.md` |
+| 2 · Desarrollo agéntico y SDD | `todomini/`, `tiendamini/` | `pedidos-web/` (base de la U2), `u2-respaldo/`, `prompt-maestro.md` |
 
 ## El caso del curso: `pedidos-web`
 
