@@ -1,14 +1,24 @@
 # Riesgos de Pedidos Legado
 
-<!--
-Etapa 2 · Encontrar.
-Un riesgo es algo que puede salir mal en producción o al migrar.
-- Evidencia: archivo:línea. Sin evidencia, es una sospecha, no un riesgo.
-- Categoría: Seguridad · Datos e integridad · Fechas · Mantenibilidad.
-- Prioridad: Alta · Media · Baja (¿qué tan grave es y qué tan probable?).
-Punto de control E2: al menos 5 riesgos con evidencia y prioridad.
--->
+> Etapa 2 · Encontrar. Cada riesgo con evidencia `archivo:línea` comprobada contra el código (rutas relativas a `legado/`).
+> Categorías: Seguridad · Datos e integridad · Fechas · Mantenibilidad. Prioridad: Alta · Media · Baja.
 
 | ID | Riesgo | Evidencia (archivo:línea) | Categoría | Prioridad |
 |---|---|---|---|---|
-| RS-01 |  |  |  |  |
+| RS-01 | **Inyección SQL**: se arma SQL concatenando texto escrito por el usuario. `EscapaComillas` existe pero nunca se llama. | `src/UFrmPedidos.pas:152` `'FROM PRODUCTOS WHERE CODIGO = ''' + Trim(edtCodProducto.Text) + ''''`; `src/UFrmPedidos.pas:262` (observación); `src/UFrmClientes.pas:76`; `src/UFrmInformes.pas:69` `... LIKE ''%' + edtCliente.Text + '%'''`; `src/UFrmProductos.pas:61`; `src/UUtilidades.pas:164` (sin llamadas) | Seguridad | Alta |
+| RS-02 | **Pedido grabado a medias**: sin transacción. Cabecera con TOTAL 0, luego líneas, luego UPDATE del total y al final el stock; un fallo intermedio deja datos inconsistentes. | `src/UFrmPedidos.pas:255` `// TODO transaccion`; `src/UFrmPedidos.pas:263` `DMPrincipal.EjecutarSQL(vSql);`; `src/UFrmPedidos.pas:320` `UPDATE PEDIDOS SET TOTAL = ...`; `src/UFrmPedidos.pas:324` `DescontarStockPedido(vFolio, FEsVip);` | Datos e integridad | Alta |
+| RS-03 | **Folios e IDs duplicados**: `MAX + 1` sin bloqueo; dos puestos a la vez generan el mismo folio. El stock también lee y luego escribe sin bloqueo. | `src/UFrmPedidos.pas:251` `vFolio := FieldByName('ULTIMO').AsInteger + 1;`; `src/UFrmClientes.pas:163`; `src/UStock.pas:38` `vActual := StockDisponible(AIdProducto);`; `src/UStock.pas:51` | Datos e integridad | Alta |
+| RS-04 | **Movimientos de stock perdidos**: `MOV_STOCK` no existe en el esquema y el error se traga con un `except` vacío; no queda traza. | `src/UStock.pas:85` `INSERT INTO MOV_STOCK ...`; `src/UStock.pas:89` `except` (vacío) | Datos e integridad | Alta |
+| RS-05 | **Dinero en `Double`** con redondeo no estándar; `FloatToStr` arma el SQL según la configuración regional: con coma decimal el INSERT o UPDATE falla. | `src/UCalculoTotales.pas:12` `PrecioUnitario: Double;`; `src/UFrmPedidos.pas:199` `... vTotal: Double;`; `src/UFrmPedidos.pas:271` `FloatToStr(FLineas[i].PrecioUnitario)`; `src/UUtilidades.pas:30` | Datos e integridad | Alta |
+| RS-06 | **Reglas duplicadas que divergen**: el total en pantalla y el grabado difieren (`>` vs `>=`, Navidad solo al grabar, categoría OFE leída en momentos distintos) y el aviso está apagado. | `src/UCalculoTotales.pas:79` `else if ABase > 500000 then`; `src/UFrmPedidos.pas:298` `else if vBase >= 500000 then`; `src/UFrmPedidos.pas:330` `if gModoPrueba then` | Mantenibilidad | Alta |
+| RS-07 | **RUT inconsistente**: dígito verificador 0/K invertido entre dos validaciones, y la búsqueda compara el RUT sin normalizar («76.600.853-4» no encuentra «76600853-4»). | `src/UUtilidades.pas:74` `vCalc := '0'`; `src/UFrmClientes.pas:194` `vDv := 'K'`; `src/UFrmPedidos.pas:102` `'WHERE C.RUT = ''' + vRut + ''''` | Datos e integridad | Alta |
+| RS-08 | **Clave de la base en el código** y usuarios sin autenticación: basta escribir ADMIN para tener nivel 9. | `src/UDMPrincipal.pas:41` `CLAVE_BD = 'Distrib#2008';`; `src/UFrmPrincipal.pas:46` `InputBox('Pedidos', 'Usuario:', '')`; `src/UFrmPrincipal.pas:49` | Seguridad | Alta |
+| RS-09 | **Se vende sin stock**: si `DescontarStock` falla, el pedido queda confirmado igual; un VIP puede dejar el stock en -20. | `src/UStock.pas:69` `if not DescontarStock(...`; `src/UStock.pas:43` `if vNuevo < -20 then` | Datos e integridad | Alta |
+| RS-10 | **IVA en tres lugares**: el informe usa 0,19 fijo y trata como base gravada un total que incluye el flete; si cambia `TASA_IVA`, el informe queda mal. | `src/UFrmInformes.pas:92` `vNeto := vTotal / (1 + 0.19);`; `src/UGlobales.pas:31`; `src/UFrmPrincipal.pas:64` | Datos e integridad | Media |
+| RS-11 | **Parámetros ignorados**: el pedido mínimo está fijo en 30.000 (el parámetro dice 25.000) y `DESC_NAVIDAD` no se lee. Al migrar, el negocio creerá que se configuran. | `src/UFrmPedidos.pas:231` `if (vSubtotal < 30000) and (FRegion <> 13) then`; `src/UGlobales.pas:33` `gDescNavidad := False;` | Mantenibilidad | Media |
+| RS-12 | **Nivel supervisor inexistente**: solo se asignan los niveles 1 y 9; lo que pide nivel ≥ 2 queda solo para ADMIN y JEFEVENTAS. | `src/UGlobales.pas:13` `// 1 = vendedor, 2 = supervisor, 9 = admin`; `src/UFrmPrincipal.pas:50` `gNivelUsuario := 9;` | Seguridad | Media |
+| RS-13 | **Fechas como texto** `dd/mm/yy` con año de 2 dígitos (pivote 50) y `StrToInt` sin validar; los días hábiles no consideran feriados. | `src/UUtilidades.pas:102` `vAnio := StrToInt(Copy(ATexto, 7, 2));`; `src/UUtilidades.pas:103` `if vAnio < 50 then`; `src/UUtilidades.pas:112`; `src/UUtilidades.pas:124` | Fechas | Media |
+| RS-14 | **Bloqueo por deuda mal calculado**: `DaysBetween` es absoluto (bloquea vencimientos futuros) y una `FECHA_VENCIMIENTO` vacía se compara contra 30/12/1899. En los datos, 26 de 30 clientes no tienen fecha; hoy ninguno de ellos tiene saldo vencido. | `src/UFrmPedidos.pas:112` `(DaysBetween(Date, FieldByName('FECHA_VENCIMIENTO').AsDateTime) > 60) then` | Fechas | Media |
+| RS-15 | **Cliente inactivo**: no se valida `ACTIVO` al vender; se le puede tomar pedido a un cliente inactivo. | `src/UFrmPedidos.pas:99` (el SELECT no trae `ACTIVO`); `src/UFrmClientes.pas:93` (único uso de `ACTIVO`) | Datos e integridad | Media |
+| RS-16 | **Rutas fijas** a `C:\PEDIDOS\DATOS` en dos lugares; el CSV exportado se escribe en la carpeta de datos. | `src/UGlobales.pas:36`; `src/UDMPrincipal.dfm:12` `Directory = 'C:\PEDIDOS\DATOS'`; `src/UFrmInformes.pas:111` | Mantenibilidad | Media |
+| RS-17 | **Código muerto y globales sin uso** (`gFleteBase`, `gUltimoFolio`, `gFechaSistema`, `gModoPrueba`, `EscapaComillas`, rama de Navidad): confunden al migrar. | `src/UGlobales.pas:32` `gFleteBase := 3500;`; `src/UFrmPedidos.pas:346` `gUltimoFolio := vFolio;`; `src/UFrmPrincipal.pas:53` `gFechaSistema := Date;`; `src/UUtilidades.pas:164` | Mantenibilidad | Baja |
