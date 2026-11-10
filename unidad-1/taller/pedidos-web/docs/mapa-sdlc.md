@@ -25,6 +25,6 @@
 
 | | Sin IA | Con Claude Code |
 |---|---|---|
-| Tiempo (min) | _por completar_ | _por completar_ |
-| Errores encontrados | _por completar_ | _por completar_ |
-| Qué tuve que corregir | _por completar_ | _por completar_ |
+| Tiempo (min) | _por completar_ | _11s_ |
+| Errores encontrados | _por completar_ | _3_ |
+| Qué tuve que corregir | _por completar_ | _Instalar extensión_ |
