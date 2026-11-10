@@ -1,64 +1,60 @@
 namespace PedidosWeb.Core.Clientes;
 
-// Servicio heredado: lo escribió un ex integrante del equipo, con apuro.
-// Funciona y tiene 4 tests. Nadie se ha atrevido a tocarlo.
+/// <summary>
+/// Consultas sobre los clientes para la pantalla: su ficha y si está activo.
+/// Módulo heredado, ordenado en la Unidad 3 sin cambiar su comportamiento.
+/// </summary>
 public class ClientesService
 {
-    private readonly List<Cliente> _l;
+    private readonly List<Cliente> _clientes;
 
     public ClientesService() : this(ClientesDeEjemplo.Crear()) { }
 
-    public ClientesService(List<Cliente> l)
+    public ClientesService(List<Cliente> clientes)
     {
-        _l = l;
+        _clientes = clientes;
     }
 
-    // ficha del cliente para la pantalla
+    /// <summary>
+    /// Ficha del cliente para la pantalla: «Nombre | RUT | Zona | Activo/Inactivo».
+    /// Texto vacío si el cliente no existe.
+    /// </summary>
     public string ObtenerFicha(string id)
     {
-        Cliente? c = BuscarPorId(id);
-        if (c == null) return "";
-        string r = NormalizarRut(c.Rut);
-        string t = ZonaDe(c.Region);
-        string e = "";
-        if (c.Activo == true) e = "Activo"; else e = "Inactivo";
-        return c.Nombre + " | " + r + " | " + t + " | " + e;
+        var cliente = BuscarPorId(id);
+        if (cliente is null)
+        {
+            return "";
+        }
+
+        var rut = NormalizarRut(cliente.Rut);
+        var zona = ZonaDe(cliente.Region);
+        var estado = cliente.Activo ? "Activo" : "Inactivo";
+
+        return $"{cliente.Nombre} | {rut} | {zona} | {estado}";
     }
 
-    // si existe y está activo
+    /// <summary>True si el cliente existe y está activo; false si está inactivo o no existe.</summary>
     public bool EstaActivo(string id)
     {
-        Cliente? c = BuscarPorId(id);
-        if (c == null) return false;
-        if (c.Activo == true) return true; else return false;
+        var cliente = BuscarPorId(id);
+        return cliente is not null && cliente.Activo;
     }
 
-    // El primer cliente con ese id, o null si no existe.
-    private Cliente? BuscarPorId(string id)
-    {
-        Cliente? c = null;
-        for (int i = 0; i < _l.Count; i++)
-        {
-            if (_l[i].Id == id) { c = _l[i]; break; }
-        }
-        return c;
-    }
+    /// <summary>El primer cliente con ese id, o null si no existe.</summary>
+    private Cliente? BuscarPorId(string id) =>
+        _clientes.FirstOrDefault(cliente => cliente.Id == id);
 
-    // RUT sin puntos ni espacios y con la «k» en mayúscula, como lo muestra la ficha.
-    private static string NormalizarRut(string rut)
-    {
-        return rut.Replace(".", "").Replace(" ", "").ToUpper();
-    }
+    /// <summary>RUT sin puntos ni espacios y con la «k» en mayúscula, como lo muestra la ficha.</summary>
+    private static string NormalizarRut(string rut) =>
+        rut.Replace(".", "").Replace(" ", "").ToUpper();
 
-    // Zona comercial según la región del cliente.
-    private static string ZonaDe(string region)
+    /// <summary>Zona comercial según la región del cliente.</summary>
+    private static string ZonaDe(string region) => region switch
     {
-        string t = "";
-        if (region == "RM") t = "Zona centro";
-        else if (region == "V") t = "Zona centro";
-        else if (region == "VIII") t = "Zona sur";
-        else if (region == "II") t = "Zona norte";
-        else t = "Sin zona";
-        return t;
-    }
+        "RM" or "V" => "Zona centro",
+        "VIII" => "Zona sur",
+        "II" => "Zona norte",
+        _ => "Sin zona"
+    };
 }
