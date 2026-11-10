@@ -1,9 +1,13 @@
+using PedidosWeb.Core.Detalle;
+using PedidosWeb.Core.Lineas;
 using PedidosWeb.Core.Pedidos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IPedidoRepositorio, PedidoRepositorioEnMemoria>();
 builder.Services.AddSingleton<ListadoPedidosServicio>();
+builder.Services.AddSingleton<ILineaPedidoRepositorio, LineaPedidoRepositorioEnMemoria>();
+builder.Services.AddSingleton<DetallePedidoServicio>();
 
 var app = builder.Build();
 
@@ -33,6 +37,16 @@ app.MapGet("/api/pedidos", (
         ? Results.Ok(resultado.Pagina)
         : Results.BadRequest(resultado.Error);
 });
+
+// HU-02 · Detalle de un pedido (specs/HU-02-detalle-pedido/spec.md).
+app.MapGet("/api/pedidos/{id:int}/detalle", (int id, DetallePedidoServicio servicio) =>
+    servicio.Obtener(id) is { } detalle
+        ? Results.Ok(detalle)
+        : Results.NotFound(new
+        {
+            codigo = "PEDIDO_NO_ENCONTRADO",
+            mensaje = $"No existe un pedido con id {id}."
+        }));
 
 app.Run();
 
