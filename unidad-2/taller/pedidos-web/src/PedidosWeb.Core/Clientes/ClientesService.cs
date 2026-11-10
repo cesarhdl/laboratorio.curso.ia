@@ -18,13 +18,8 @@ public class ClientesService
     {
         Cliente? c = BuscarPorId(id);
         if (c == null) return "";
-        string r = c.Rut.Replace(".", "").Replace(" ", "").ToUpper();
-        string t = "";
-        if (c.Region == "RM") t = "Zona centro";
-        else if (c.Region == "V") t = "Zona centro";
-        else if (c.Region == "VIII") t = "Zona sur";
-        else if (c.Region == "II") t = "Zona norte";
-        else t = "Sin zona";
+        string r = NormalizarRut(c.Rut);
+        string t = ZonaDe(c.Region);
         string e = "";
         if (c.Activo == true) e = "Activo"; else e = "Inactivo";
         return c.Nombre + " | " + r + " | " + t + " | " + e;
@@ -47,5 +42,23 @@ public class ClientesService
             if (_l[i].Id == id) { c = _l[i]; break; }
         }
         return c;
+    }
+
+    // RUT sin puntos ni espacios y con la «k» en mayúscula, como lo muestra la ficha.
+    private static string NormalizarRut(string rut)
+    {
+        return rut.Replace(".", "").Replace(" ", "").ToUpper();
+    }
+
+    // Zona comercial según la región del cliente.
+    private static string ZonaDe(string region)
+    {
+        string t = "";
+        if (region == "RM") t = "Zona centro";
+        else if (region == "V") t = "Zona centro";
+        else if (region == "VIII") t = "Zona sur";
+        else if (region == "II") t = "Zona norte";
+        else t = "Sin zona";
+        return t;
     }
 }
