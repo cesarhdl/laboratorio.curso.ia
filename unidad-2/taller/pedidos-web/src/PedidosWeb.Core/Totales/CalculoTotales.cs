@@ -78,7 +78,9 @@ public static class CalculoTotales
             ? RedondearAlPeso(fleteBase * RecargoFleteExtremo)
             : RedondearAlPeso(fleteBase);
 
-    // UCalculoTotales.pas:48-51 (Calc3): Trunc(x + 0,49). Defecto R05: un ,50 exacto redondea
-    // hacia abajo. Se migra igual al legado; se corrige en la etapa 3, en un commit aparte.
-    private static decimal RedondearAlPeso(decimal valor) => Math.Truncate(valor + 0.49m);
+    // Redondeo al peso: ,50 hacia arriba. Corrige el defecto R05 del legado
+    // (UCalculoTotales.pas:48-51, Calc3 = Trunc(x + 0,49), donde un ,50 exacto bajaba).
+    // Ver docs/migracion/defectos-corregidos.md (D1).
+    private static decimal RedondearAlPeso(decimal valor) =>
+        Math.Round(valor, 0, MidpointRounding.AwayFromZero);
 }
