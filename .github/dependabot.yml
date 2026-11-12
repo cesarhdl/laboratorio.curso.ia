@@ -1,0 +1,23 @@
+# Dependabot (taller U8, reto): vigila las dependencias de pedidos-web.
+# Las dependencias también son input: si una tiene una vulnerabilidad o queda vieja, Dependabot abre un PR.
+# Un PR de Dependabot se revisa como cualquier otro: CI en verde y una persona decide el merge.
+version: 2
+updates:
+  # Paquetes NuGet de los 3 .csproj (Api, Core y Tests). Se busca donde está PedidosWeb.sln.
+  - package-ecosystem: "nuget"
+    directory: "/unidad-2/taller/pedidos-web"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+
+  # Actions de los workflows (ci.yml, claude.yml y claude-review.yml).
+  # Con "/", Dependabot revisa .github/workflows. Mantiene el pin por SHA y actualiza el comentario de versión.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
