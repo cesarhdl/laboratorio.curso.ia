@@ -30,6 +30,8 @@ Borra estos comentarios al terminar.
 
 ## Etapa 3 · La falla
 
+> **Pendiente:** omitida por decisión del alumno el 2026-11-12. No hay PR, diagnóstico de `@claude` ni merge todavía; los campos siguientes quedan sin completar hasta hacerla.
+
 - **PR:** <enlace>
 - **Qué rompí (a mano):** <archivo y cambio>
 - **Diagnóstico de `@claude` (en una línea):** <resumen>
