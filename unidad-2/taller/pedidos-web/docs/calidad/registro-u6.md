@@ -24,9 +24,9 @@ Borra estos comentarios al terminar.
 
 ## Etapa 2 · Pipeline seguro
 
-- **`ci.yml`:** <enlace al primer run en verde>
-- **`claude.yml` en `main`:** <sí / no>
-- **Revisé:** permisos mínimos ☐ · timeout ☐ · versiones fijas ☐ · token solo como secreto ☐
+- **`ci.yml`:** https://github.com/cesarhdl/laboratorio.curso.ia/actions/runs/43220139189 (primer run, en verde). Va en `.github/workflows/` de la raíz del repo y trabaja en `unidad-2/taller/pedidos-web`.
+- **`claude.yml` en `main`:** sí (commit `5902931`). Solo responde a OWNER, MEMBER o COLLABORATOR, porque el repo es público.
+- **Revisé:** permisos mínimos ☑ (`contents: read`) · timeout ☑ (10 min) · versiones fijas ☑ (actions por SHA, ubuntu-24.04, .NET 10.0.404) · token solo como secreto ☑ (`CLAUDE_CODE_OAUTH_TOKEN`)
 
 ## Etapa 3 · La falla
 
