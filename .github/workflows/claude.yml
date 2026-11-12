@@ -1,0 +1,48 @@
+# Claude en GitHub (taller U6): responde a @claude en comentarios de issues y pull requests.
+# Basado en el ejemplo oficial «Respond to @claude mentions» (code.claude.com/docs/en/github-actions)
+# y en unidad-6/taller/u6-respaldo del repo de material.
+# Requiere: la Claude GitHub App instalada en el repo y el secreto CLAUDE_CODE_OAUTH_TOKEN
+# (se genera con `claude setup-token`). El token NUNCA va en este archivo ni en ningún otro.
+# Regla del curso: Claude diagnostica; tú corriges y haces merge con el CI en verde.
+name: Claude
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+# Un solo Claude a la vez por issue o PR.
+concurrency:
+  group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
+
+jobs:
+  claude:
+    # Solo si el comentario menciona a @claude y lo escribe alguien con acceso al repo
+    # (en un repo público, cualquier persona puede comentar).
+    if: >-
+      contains(github.event.comment.body, '@claude') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read        # solo lee el código: no hace commits
+      pull-requests: write  # para responder en el PR
+      issues: write         # para responder en el issue
+      id-token: write       # para autenticarse con la Claude GitHub App
+      actions: read         # para leer el log del CI que falló
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Claude
+        uses: anthropics/claude-code-action@9008224dd4f743876f528e6ba0f0d611f076a7f9 # v1.0.271
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          additional_permissions: |
+            actions: read
+          # Máximo 5 turnos y sin herramientas de edición: solo diagnostica.
+          claude_args: '--max-turns 5 --disallowedTools "Edit,Write"'
