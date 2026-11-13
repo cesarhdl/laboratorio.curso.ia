@@ -1,13 +1,16 @@
 # Plan de evolución de la IA para una Business Unit
 
-> Plantilla de la Unidad 9. Complétala con Claude Code en la etapa 1 y revísala tú. En la etapa 3 la conviertes en PDF con tu Skill `pdf-con-estilo`.
-> Fuente de datos: `docs/adopcion/analytics-ficticio.csv` (4 equipos × 8 semanas, datos ficticios). No uses cifras que no estén en el CSV.
+> Fuente de datos: `docs/adopcion/analytics-ficticio.csv` (4 equipos × 8 semanas, datos ficticios). Todas las cifras del diagnóstico y de las líneas base salen de ese archivo.
 
 **BU:** Desarrollo de la distribuidora · **Autor:** Cesar Herrera · **Fecha:** 13-11-2026
 
 ## 1. Resumen para la gerencia
 
-<3 a 5 líneas: dónde está hoy la BU, qué propones y qué se instala.>
+La BU está en tres niveles distintos: Pedidos Web trabaja como equipo AI-native (nivel 4), Bodega y Reportes
+usan la IA de forma individual (nivel 2) y Facturación casi no la usa (nivel 1). El problema no es la cantidad
+de uso: Bodega es el equipo que más la usa y el que menos código acepta. Proponemos llevar a los tres equipos
+al nivel 3 en 6 meses instalando `pedidos-playbook`, la forma de trabajar de Pedidos Web empaquetada como plugin
+de Claude Code, y medir cada mes los mismos indicadores para todos.
 
 ## 2. Diagnóstico por equipo
 
@@ -24,26 +27,72 @@ Modelo de madurez del curso: 1 Uso a escondidas · 2 Uso individual · 3 Equipo 
 
 ## 3. Objetivo por equipo para el próximo trimestre
 
-| Equipo | Objetivo medible | Indicador que lo muestra |
+| Equipo | Objetivo medible (nivel meta) | Indicador que lo muestra (línea base del CSV → meta) |
 |---|---|---|
-| | | |
+| Pedidos Web | Pasar de usar bien a medir y mejorar (nivel 5): publicar cada mes los indicadores de la BU y mantener su calidad. | Tasa de aceptación 0,74–0,78 → ≥ 0,74 todas las semanas; PR con Claude Code 80 % → ≥ 80 %; informe mensual publicado los 3 meses. |
+| Facturacion | Que el equipo use la IA a la vista y con reglas (nivel 2 → 3 en el año). | Usuarios activos 0–1 → ≥ 3 por semana; semanas sin sesiones 2 de 8 → 0; PR con Claude Code 1 % → ≥ 20 %. |
+| Bodega | Convertir el uso alto en código aceptado (nivel 3). | Tasa de aceptación 0,11–0,17 → ≥ 0,40; PR con Claude Code 28 % → ≥ 50 %, sin bajar de 7 usuarios activos. |
+| Reportes | Uso sostenido y no solo algunas semanas (nivel 3). | Semanas sin PR con Claude Code 4 de 8 → 0; PR con Claude Code 37 % → ≥ 60 %; tasa de aceptación ≥ 0,50 todas las semanas. |
 
 ## 4. El playbook
 
-<Qué trae `pedidos-playbook` y para qué sirve cada pieza. Cómo lo instala otro equipo (los comandos están en el README del taller).>
+`pedidos-playbook` (versión 1.0.0) empaqueta en un plugin de Claude Code lo que Pedidos Web aprendió en 8 unidades:
+
+| Pieza | Para qué sirve |
+|---|---|
+| Subagente `revisor` | Revisa la rama contra `main` con las reglas de `REVIEW.md` y `AGENTS.md` leídas desde `main`. Solo lectura. |
+| Skill `documentar-modulo` | Documenta un módulo con su API pública, un ejemplo y un diagrama, solo con lo que está en el código. |
+| Skill `planificador-proyectos-web` | Planifica y documenta un proyecto: specs, épicas, decisiones y reglas para agentes. |
+| Guardián | Hook que frena toda acción de Claude que nombre un `.env` o un `.pem`. |
+| MCP `claude-academy` | Cursos y material de Claude Academy, de solo lectura. |
+| Plantilla de `AGENTS.md` | Las reglas de trabajo, para que cada equipo las copie y ajuste en su repo. |
+
+Lo que **no** viaja en el plugin se entrega como plantilla: `AGENTS.md`, `REVIEW.md` y los permisos de
+`.claude/settings.json`, porque cada equipo decide sus reglas. Otro equipo lo instala con:
+
+```text
+claude plugin marketplace add cesarhdl/laboratorio.curso.ia
+claude plugin install pedidos-playbook@pedidos-cesarhdl
+```
 
 ## 5. Hoja de ruta a 6 y 12 meses
 
 | Hito | Mes | Equipo | Champion | Cómo sabemos que se cumplió |
 |---|---|---|---|---|
-| | | | | |
+| Playbook instalado y `AGENTS.md` + `REVIEW.md` propios | 1 | Bodega | Líder técnico de Bodega, con apoyo de Pedidos Web | El plugin aparece instalado en los 7 usuarios y su repo tiene `AGENTS.md` y `REVIEW.md` en `main`. |
+| Playbook instalado y revisor en cada PR | 2 | Reportes | Líder técnico de Reportes | Hay PR con Claude Code todas las semanas del mes. |
+| Piloto con 2 personas y política de IA leída | 3 | Facturacion | Líder técnico de Facturacion | ≥ 2 usuarios activos cada semana del mes y primer PR revisado con el revisor. |
+| Primer informe mensual de indicadores de la BU | 3 | Pedidos Web | Cesar Herrera (Pedidos Web) | Informe publicado con los 6 indicadores de la sección 6 para los 4 equipos. |
+| Revisión de mitad de año | 6 | Toda la BU | Gerencia de Desarrollo | Bodega y Reportes cumplen sus metas de la sección 3; el playbook va en una versión nueva con lo aprendido. |
+| BU en nivel 3 o más | 12 | Toda la BU | Gerencia de Desarrollo | Los 4 equipos cumplen su meta y Facturacion llega a nivel 3. |
 
-<El ciclo: estandarizar → medir → ajustar → escalar.>
+El ciclo: **estandarizar** (instalar el playbook) → **medir** (indicadores mensuales) → **ajustar** (nueva
+versión del playbook) → **escalar** (siguiente equipo).
 
 ## 6. Indicadores que vamos a seguir
 
-<Cuáles, cada cuánto y quién los revisa.>
+Los mismos 6 del CSV, para los 4 equipos, **semanales** y revisados **una vez al mes** por los champions con la
+gerencia: usuarios activos, sesiones, líneas aceptadas, tasa de aceptación, PR con Claude Code y PR totales.
+De ellos se calculan tres señales:
+
+- **% de PR con Claude Code** (PR con Claude Code ÷ PR totales): si la IA llega al trabajo del equipo.
+- **Líneas aceptadas por sesión**: si el uso produce código útil (hoy, de 5,5 en Bodega a 26,1 en Pedidos Web).
+- **Semanas sin sesiones o sin PR con Claude Code**: si el uso es sostenido.
+
+Ningún indicador se lee solo: mucho uso con poca aceptación es una señal de alerta, no un éxito.
 
 ## 7. Riesgos y próximos pasos
 
-- <riesgo> → <cómo lo mitigamos>
+- **Medir solo el uso premia lo equivocado** (Bodega tiene el mayor uso y la menor aceptación) → las metas
+  combinan uso, aceptación y PR, y se revisan juntas.
+- **Uso a escondidas en Facturacion**, sin reglas ni controles sobre los datos → piloto pequeño con la política
+  de IA de Pedidos Web (`docs/gobernanza/politica-ia.md`) y el guardián instalado desde el primer día.
+- **El plugin falla en el equipo de otro** (nos pasó: rutas de más de 260 caracteres en Windows y un hook que
+  bloqueaba todo en PowerShell) → cada versión se prueba instalándola desde GitHub en una carpeta limpia
+  antes de anunciarla, y se publica con un número de versión nuevo.
+- **El uso depende de pocas personas** (Reportes alterna semanas con y sin uso) → un champion por equipo y
+  metas de uso sostenido, no solo de promedio.
+- **Los datos son de 8 semanas y ficticios** → antes del mes 1, repetir el diagnóstico con el análisis real de
+  uso del equipo (Claude Code analytics) y ajustar las líneas base.
+
+**Próximo paso:** aprobar el plan y elegir los champions de Bodega, Reportes y Facturacion.

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>{{titulo}}</title>
+<style>
+  /* Diseño de pdf-con-estilo. Lo usan todos los documentos: no se ajusta para uno en particular. */
+  :root {
+    --tinta: #1d2733;
+    --suave: #5a6878;
+    --acento: #0b6e99;
+    --acento-claro: #e6f2f8;
+    --oscuro: #0d1b2a;
+    --dorado: #f2c14e;
+    --borde: #d5dde5;
+    --zebra: #f6f8fa;
+  }
+  @page { size: A4; margin: 22mm 18mm 20mm 18mm; }
+  @page :first { margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: var(--tinta);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Portada: página completa */
+  .portada {
+    height: 297mm;
+    width: 210mm;
+    background: var(--oscuro);
+    color: #fff;
+    padding: 70mm 22mm 24mm 22mm;
+    page-break-after: always;
+    position: relative;
+  }
+  .portada .etiqueta {
+    font-size: 9pt;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 8mm;
+  }
+  .portada h1 {
+    font-size: 30pt;
+    line-height: 1.15;
+    margin: 0 0 8mm 0;
+    color: #fff;
+    border: none;
+  }
+  .portada .subtitulo { font-size: 12pt; color: #c8d6e5; max-width: 150mm; }
+  .portada .subtitulo p { margin: 0 0 2mm 0; }
+  .portada .meta {
+    position: absolute;
+    left: 22mm;
+    right: 22mm;
+    bottom: 24mm;
+    border-top: 2px solid var(--dorado);
+    padding-top: 5mm;
+    font-size: 10pt;
+    color: #e3ebf3;
+  }
+  .portada .meta p { margin: 0; }
+  .portada .meta strong { color: #fff; }
+  .portada code { color: var(--dorado); background: transparent; }
+
+  /* Contenido */
+  .contenido h1 { font-size: 20pt; color: var(--oscuro); }
+  .contenido h2 {
+    font-size: 15pt;
+    color: var(--acento);
+    border-bottom: 2px solid var(--acento-claro);
+    padding-bottom: 2mm;
+    margin: 9mm 0 4mm 0;
+    page-break-after: avoid;
+  }
+  .contenido h2:first-child { margin-top: 0; }
+  .contenido h3 { font-size: 12pt; color: var(--oscuro); margin: 6mm 0 3mm 0; page-break-after: avoid; }
+  .contenido p, .contenido li { orphans: 3; widows: 3; }
+  .contenido ul, .contenido ol { padding-left: 6mm; }
+  .contenido li { margin-bottom: 1.5mm; }
+  .contenido strong { color: var(--oscuro); }
+
+  blockquote {
+    margin: 4mm 0;
+    padding: 3mm 5mm;
+    background: var(--acento-claro);
+    border-left: 4px solid var(--acento);
+    color: var(--tinta);
+  }
+  blockquote p { margin: 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4mm 0 6mm 0;
+    font-size: 9pt;
+    line-height: 1.4;
+  }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  th {
+    background: var(--oscuro);
+    color: #fff;
+    text-align: left;
+    font-weight: 600;
+    padding: 2.2mm 2.5mm;
+  }
+  td {
+    padding: 2.2mm 2.5mm;
+    border-bottom: 1px solid var(--borde);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) td { background: var(--zebra); }
+
+  code {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.9em;
+    background: var(--zebra);
+    padding: 0.2mm 1mm;
+    border-radius: 1mm;
+    word-break: break-word;
+  }
+  pre {
+    background: var(--oscuro);
+    color: #e3ebf3;
+    padding: 4mm;
+    border-radius: 2mm;
+    font-size: 8.5pt;
+    white-space: pre-wrap;
+    page-break-inside: avoid;
+  }
+  pre code { background: transparent; color: inherit; padding: 0; }
+  a { color: var(--acento); text-decoration: none; }
+  hr { border: none; border-top: 1px solid var(--borde); margin: 6mm 0; }
+</style>
+</head>
+<body>
+  <section class="portada">
+    <div class="etiqueta">{{etiqueta}}</div>
+    <h1>{{titulo}}</h1>
+    <div class="subtitulo">{{subtitulo}}</div>
+    <div class="meta">{{meta}}</div>
+  </section>
+  <main class="contenido">
+    {{contenido}}
+  </main>
+</body>
+</html>
