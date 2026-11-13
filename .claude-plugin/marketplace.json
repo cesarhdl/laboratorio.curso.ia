@@ -1,0 +1,14 @@
+{
+  "name": "pedidos-cesarhdl",
+  "owner": { "name": "Cesar Herrera (Pedidos Web)" },
+  "metadata": {
+    "description": "Marketplace de Pedidos Web: la forma de trabajar del equipo, instalable con un comando."
+  },
+  "plugins": [
+    {
+      "name": "pedidos-playbook",
+      "source": "./unidad-2/taller/pedidos-web/plugins/pedidos-playbook",
+      "description": "Revisor, documentar-modulo, planificador-proyectos-web, guardián, plantilla de AGENTS.md y MCP claude-academy."
+    }
+  ]
+}
