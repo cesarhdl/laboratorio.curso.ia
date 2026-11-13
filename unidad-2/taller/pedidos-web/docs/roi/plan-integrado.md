@@ -1,46 +1,68 @@
 # Plan integrado de adopción de IA · Pedidos Web
 
-> Plantilla de la Unidad 10. Complétala con Claude Code en la etapa 3, usando solo cifras de `docs/roi/modelo-roi.md`.
-> Luego la conviertes en `docs/roi/plan-integrado.pdf` con tu Skill `pdf-con-estilo` (U9), sin tocar su CSS.
+> **Recomendación:** extender la forma de trabajar de Pedidos Web a Bodega y Reportes por 6 meses, con Facturacion como piloto de 2 personas desde el mes 3.
 
-**Para:** Gerencia general · **Autor:** <tu nombre> · **Fecha:** <fecha>
+> **Decisión antes del 15-12-2026.** ROI estimado entre 125 % y 265 % a 12 meses; 49 % si el ahorro es la mitad.
 
-## Página 1 · Informe ejecutivo
+**Para:** Gerencia general · **Autor:** Cesar Herrera · **Fecha:** 13-11-2026
+
+## Informe ejecutivo
 
 ### 1. Problema
-<Qué decisión hay que tomar y por qué ahora. 2 líneas.>
+Terminó el piloto de 12 semanas en Pedidos Web y hay que decidir si la misma forma de trabajar con IA se extiende a
+los otros tres equipos de la BU. Conviene decidir ahora: Bodega ya usa mucho la IA pero acepta poco de lo que produce,
+y Facturacion casi no la usa.
 
 ### 2. Qué se hizo
-<El piloto en dos líneas, sin jerga técnica.>
+El equipo de Pedidos Web (6 personas) trabajó 6 semanas como siempre y 6 semanas con Claude Code, siguiendo reglas
+escritas, revisión de cada cambio y controles de seguridad. Comparamos entregas, fallas, defectos y horas.
 
 ### 3. Resultados
-<2 o 3 datos medidos y el ROI como rango: entre [__] % y [__] %. Di qué lo mueve.>
+Entre las semanas 1-6 y las semanas 9-12: el tiempo de entrega bajó de 6,58 a 4,38 días, las entregas con falla de
+41,7 % a 21,4 % y los defectos en producción de 2,0 a 1,0 por semana. Las semanas 7 y 8 empeoraron antes de mejorar:
+es el costo de aprender. **ROI a 12 meses: entre 125 % y 265 %.** Lo que más lo mueve son las horas ahorradas,
+que reporta el equipo y no se midieron: con la mitad del ahorro el ROI baja a 49 %, y sería negativo (−23 %)
+solo si además no mejorara la calidad. Datos ficticios y muestra pequeña.
 
 ### 4. Recomendación
-<Una sola frase que se pueda aprobar o rechazar.>
+Extender la forma de trabajar de Pedidos Web a Bodega y Reportes por 6 meses, con Facturacion como piloto de
+2 personas desde el mes 3.
 
 ### 5. Próximo paso
-<Quién, qué y para cuándo.>
+La gerencia decide antes del 15-12-2026. Si aprueba, Cesar Herrera (Pedidos Web) instala el playbook en Bodega
+en el mes 1 junto a su líder técnico, y en el mes 3 se presenta el primer informe de indicadores de los 4 equipos.
 
-*Preparado con apoyo de IA; cifras verificadas por <nombre>.*
-
----
+*Preparado con apoyo de IA; cifras verificadas por Cesar Herrera.*
 
 ## Anexo
 
-No repite tus entregables: los cita.
+No repite los entregables: los cita.
 
 ### Roadmap
-<3, 6 y 12 meses.> · Respaldo: `docs/adopcion/plan-evolucion.md` (U9)
+Mes 1: playbook en Bodega · mes 2: Reportes · mes 3: piloto en Facturacion y primer informe mensual ·
+mes 6: revisión de mitad de año · mes 12: los 4 equipos en nivel 3 o más.
+Respaldo: `docs/adopcion/plan-evolucion.md` (U9), sección 5.
 
 ### Indicadores
-<Qué se mide y con qué meta.> · Respaldo: `docs/calidad/registro-u6.md` (U6) · `docs/checklist-revision.md` (U7)
+Los del piloto (despliegues, tiempo de entrega, entregas con falla, recuperación, defectos y retrabajo) y los de uso
+de la U9 (usuarios activos, tasa de aceptación y % de PR con Claude Code), revisados una vez al mes. Cada cambio
+pasa por CI con tests de borde y por revisión con reglas escritas antes del merge.
+Respaldo: `docs/calidad/registro-u6.md` (U6) · `docs/checklist-revision.md` (U7) · `docs/roi/modelo-roi.md`, sección 1.
 
 ### Gobernanza
-<Qué controles se llevan a los otros equipos.> · Respaldo: `docs/gobernanza/politica-ia.md` (U8)
+Se llevan a los otros equipos los controles probados el 12-11-2026: no leer secretos (`.env`, `*.pem`), pedir
+aprobación antes de conectarse a internet o de tocar el golden master, el legado en solo lectura y los tests después
+de cada cambio. También lo que no cubren (por ejemplo, una búsqueda con `grep -r` puede mostrar un secreto).
+Respaldo: `docs/gobernanza/politica-ia.md` (U8).
 
 ### ROI
-<Supuestos clave, escenarios, sensibilidad y punto de equilibrio.> · Respaldo: `docs/roi/modelo-roi.md` · `docs/migracion/defectos-corregidos.md` (U5)
+Costo a 12 meses: USD 5.465 a 5.825 (asientos 1.440 a 1.800, capacitación 3.600, curva de adopción 425).
+Beneficio: USD 13.125 a 19.950. ROI entre 125 % y 265 %; con el ahorro a la mitad, 49 %; con la mitad del ahorro
+y sin mejora de calidad, −23 %. Supuestos clave: valor hora USD 25 y 8 h por defecto (estimados), asiento
+USD 20 a 25 (oficial), horas ahorradas reportadas por el equipo (medido).
+Respaldo: `docs/roi/modelo-roi.md` · `docs/migracion/defectos-corregidos.md` (U5), defectos detectados antes de producción.
 
 ### Evolución
-<Nivel de madurez actual → meta.> · Respaldo: `docs/adopcion/plan-evolucion.md` (U9)
+Hoy: Pedidos Web en nivel 4, Bodega y Reportes en nivel 2, Facturacion en nivel 1. Meta: los tres en nivel 3 en
+6 a 12 meses y Pedidos Web en nivel 5 (mide y mejora).
+Respaldo: `docs/adopcion/plan-evolucion.md` (U9), secciones 2 y 3.
