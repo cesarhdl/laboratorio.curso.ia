@@ -73,3 +73,11 @@ Respaldo: `docs/roi/modelo-roi.md`, sección 6.
 Hoy: Pedidos Web en nivel 4, Bodega y Reportes en nivel 2, Facturacion en nivel 1. Meta: los tres en nivel 3 en
 6 a 12 meses y Pedidos Web en nivel 5 (mide y mejora).
 Respaldo: `docs/adopcion/plan-evolucion.md` (U9), secciones 2 y 3.
+
+### Checklist final
+| Punto | Estado | Cómo se verificó |
+|---|---|---|
+| `docs/roi/modelo-roi.md` con supuestos, escenarios y punto de equilibrio | ✔ Cumplido | Secciones 2 (Supuestos), 4 (Beneficios y escenarios) y 6 (Punto de equilibrio) del modelo |
+| `docs/roi/plan-integrado.md` con informe y anexo | ✔ Cumplido | Informe ejecutivo en 5 franjas (página 2) y Anexo con 6 partes |
+| `docs/roi/plan-integrado.pdf` generado con tu Skill | ✔ Cumplido | Generado con `.claude/skills/pdf-con-estilo/` (U9), sin tocar su CSS |
+| Nada fuera de `docs/roi/` cambió | ✔ Cumplido | `git diff` desde la base de la Unidad 10: 0 archivos cambiados fuera de `docs/roi/` |
