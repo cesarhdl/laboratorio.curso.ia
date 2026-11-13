@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "pedidos-playbook",
-      "source": "./unidad-2/taller/pedidos-web/plugins/pedidos-playbook",
+      "source": "./plugins/pedidos-playbook",
       "description": "Revisor, documentar-modulo, planificador-proyectos-web, guardián, plantilla de AGENTS.md y MCP claude-academy."
     }
   ]
