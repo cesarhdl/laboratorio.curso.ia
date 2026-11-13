@@ -22,7 +22,8 @@ Entre las semanas 1-6 y las semanas 9-12: el tiempo de entrega bajó de 6,58 a 4
 41,7 % a 21,4 % y los defectos en producción de 2,0 a 1,0 por semana. Las semanas 7 y 8 empeoraron antes de mejorar:
 es el costo de aprender. **ROI a 12 meses: entre 125 % y 265 %.** Lo que más lo mueve son las horas ahorradas,
 que reporta el equipo y no se midieron: con la mitad del ahorro el ROI baja a 49 %, y sería negativo (−23 %)
-solo si además no mejorara la calidad. Datos ficticios y muestra pequeña.
+solo si además no mejorara la calidad. **Punto de equilibrio:** la inversión se paga si cada persona ahorra
+3,24 horas al mes, aun sin contar la mejora de calidad; el piloto reporta 4,96. Datos ficticios y muestra pequeña.
 
 ### 4. Recomendación
 Extender la forma de trabajar de Pedidos Web a Bodega y Reportes por 6 meses, con Facturacion como piloto de
@@ -61,6 +62,12 @@ Beneficio: USD 13.125 a 19.950. ROI entre 125 % y 265 %; con el ahorro a la mita
 y sin mejora de calidad, −23 %. Supuestos clave: valor hora USD 25 y 8 h por defecto (estimados), asiento
 USD 20 a 25 (oficial), horas ahorradas reportadas por el equipo (medido).
 Respaldo: `docs/roi/modelo-roi.md` · `docs/migracion/defectos-corregidos.md` (U5), defectos detectados antes de producción.
+
+### Punto de equilibrio
+ROI = 0 cuando el beneficio iguala el costo conservador (USD 5.825). Despejando las horas ahorradas por dev al mes, con
+valor hora USD 25, 6 devs y 12 meses: 3,24 h sin contar defectos evitados y 0,90 h contándolos. El piloto reporta
+4,96 h (conservador) a 6,42 h (optimista): el ahorro puede caer un 35 % antes de perder plata.
+Respaldo: `docs/roi/modelo-roi.md`, sección 6.
 
 ### Evolución
 Hoy: Pedidos Web en nivel 4, Bodega y Reportes en nivel 2, Facturacion en nivel 1. Meta: los tres en nivel 3 en

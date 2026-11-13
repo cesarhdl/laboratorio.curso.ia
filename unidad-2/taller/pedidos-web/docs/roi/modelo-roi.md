@@ -94,7 +94,26 @@ Con la mitad del ahorro el ROI sigue positivo; solo se vuelve negativo si ademá
 
 ## 6. Punto de equilibrio (Tu reto)
 
-<Escríbelo tú: qué despejas, el resultado y una línea para la gerencia.>
+**Qué despejo:** las horas ahorradas por dev al mes (*h*). **Fijo:** el costo conservador (USD 5.825), el valor hora
+(USD 25), 6 devs y 12 meses. En el punto de equilibrio el ROI vale **0**, es decir, beneficio = costo.
+
+Beneficio por horas = *h* × 6 devs × 12 meses × USD 25 = *h* × 1.800 USD.
+
+| Caso | Despeje | *h* (horas por dev al mes) | Prueba: ROI con ese *h* |
+|---|---|---|---|
+| **A · Sin contar defectos evitados** (el más exigente) | 1.800 × *h* = 5.825 → *h* = 5.825 ÷ 1.800 | **3,24** | (3,24 × 1.800 − 5.825) ÷ 5.825 = 0,1 % ≈ 0 |
+| B · Contando los defectos evitados del conservador (USD 4.200) | 1.800 × *h* + 4.200 = 5.825 → *h* = 1.625 ÷ 1.800 | 0,90 | (0,90 × 1.800 + 4.200 − 5.825) ÷ 5.825 = −0,1 % ≈ 0 |
+
+(El ±0,1 % viene de redondear *h* a dos decimales; sin redondear, 3,2361 y 0,9028 dan exactamente 0 %.)
+
+**Comparado con el piloto:** el equipo reporta 8,5 h por semana en el conservador (sem. 7-12) y 11,0 h en el optimista
+(sem. 9-12). En 42 semanas eso equivale a 8,5 × 42 ÷ (6 × 12) = **4,96 h por dev al mes** (conservador) y 11,0 × 42 ÷ 72 =
+**6,42** (optimista). Aun sin contar la calidad, el ahorro reportado puede caer un **35 %** (de 4,96 a 3,24) antes de
+perder plata. Esto cuadra con la sensibilidad: la mitad del ahorro (2,48 h) queda bajo el equilibrio del caso A, y por
+eso ese escenario sin mejora de calidad da −23 %.
+
+**Para la gerencia, en una línea:** la inversión se paga si cada persona ahorra **3,2 horas al mes**, aun sin contar la
+mejora de calidad; el piloto reporta cerca de 5.
 
 ## 7. Limitaciones
 
