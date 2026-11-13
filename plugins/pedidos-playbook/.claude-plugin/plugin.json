@@ -1,6 +1,6 @@
 {
   "name": "pedidos-playbook",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Forma de trabajar de Pedidos Web: revisor de PR, documentar-modulo, planificador-proyectos-web, guardián de secretos, plantilla de AGENTS.md y MCP claude-academy de solo lectura.",
   "author": { "name": "Cesar Herrera (Pedidos Web)" },
   "repository": "https://github.com/cesarhdl/laboratorio.curso.ia",

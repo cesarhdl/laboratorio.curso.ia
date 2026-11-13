@@ -21,6 +21,16 @@ La forma de trabajar de Pedidos Web, instalable en Claude Code con un comando.
 | MCP `claude-academy` | `.mcp.json` | Cursos y material de Claude Academy, solo lectura. |
 | Plantilla de `AGENTS.md` | `plantillas/AGENTS.md` | Para copiar a la raíz de cada repo. No se instala sola. |
 
+## Versiones
+
+| Versión | Cambio |
+|---|---|
+| 1.1.0 | El `revisor` exige la línea `Uso de IA: …` en el PR o en un commit de la rama (política de IA, sección 5). |
+| 1.0.0 | Primera versión: revisor, documentar-modulo, planificador-proyectos-web, guardián, plantilla de AGENTS.md y MCP claude-academy. |
+
+Para recibir una versión nueva: `claude plugin marketplace update pedidos-cesarhdl` y luego
+`claude plugin update pedidos-playbook@pedidos-cesarhdl`.
+
 ## Lo que no viaja en el plugin
 
 `AGENTS.md`, `REVIEW.md` y los permisos de `.claude/settings.json` son de cada repo: se copian como plantilla

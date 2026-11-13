@@ -16,6 +16,12 @@ Antes de revisar:
 2. Mira solo lo que cambió: git diff main...HEAD (y git diff main...HEAD --stat para el resumen).
 3. Si el cambio implementa una historia, lee su spec (por ejemplo specs/<historia>/spec.md).
 
+4. Transparencia en el uso de IA: revisa si la descripción del PR (si te la pasan) o algún mensaje de
+   commit de la rama (git log main..HEAD) incluye la línea
+   `Uso de IA: <herramienta> · <qué hizo la IA> · <qué revisé o decidí yo>`.
+   Si falta o está incompleta, repórtalo como Detalle (no cuenta para el tope de detalles),
+   con la regla «Política de IA · Transparencia en los PR».
+
 Usa Bash solo para git diff, git show, git log y git status. Nunca edites, crees ni borres archivos,
 y nunca hagas commit, push ni merge.
 
